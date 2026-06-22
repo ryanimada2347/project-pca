@@ -17,9 +17,6 @@ face_cascade = cv2.CascadeClassifier(
     cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
 )
 
-# ============================================
-# FUNGSI-FUNGSI INTI (DIPAKAI DI KEDUA TAB)
-# ============================================
 def preprocess(uploaded_file, target_size=IMG_SIZE):
     """Membaca file upload, deteksi wajah, crop, resize, grayscale."""
     file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
@@ -86,26 +83,15 @@ def project_to_pca(face_vector, mean_face, pca_space):
     centered = face_vector - mean_face
     return np.dot(centered, pca_space)
 
-
-# ============================================
-# SESSION STATE INIT
-# ============================================
 if "pca_built" not in st.session_state:
     st.session_state.pca_built = False
 if "log_perbandingan" not in st.session_state:
     st.session_state.log_perbandingan = []
 
-
-# ============================================
-# UI UTAMA
-# ============================================
 st.title("🧠 Sistem PCA: Kompresi Citra & Deteksi Kemiripan Wajah")
 
 tab1, tab2 = st.tabs(["4.1 Kompresi Citra", "4.2 Deteksi Kemiripan Wajah"])
 
-# ============================================
-# SIDEBAR: UPLOAD DATASET (DIPAKAI KEDUA TAB)
-# ============================================
 st.sidebar.header("Dataset Wajah (Training PCA)")
 dataset_files = st.sidebar.file_uploader(
     "Upload minimal 5-10 gambar wajah",
@@ -171,10 +157,6 @@ if dataset_files:
 else:
     st.sidebar.info("Upload dataset wajah untuk mulai.")
 
-
-# ============================================
-# TAB 1: KOMPRESI CITRA
-# ============================================
 with tab1:
     st.header("4.1 Hasil Kompresi Citra")
 
@@ -277,10 +259,6 @@ with tab1:
                     ax2.grid(alpha=0.3)
                     st.pyplot(fig2)
 
-
-# ============================================
-# TAB 2: DETEKSI KEMIRIPAN WAJAH
-# ============================================
 with tab2:
     st.header("4.2 Hasil Deteksi Kemiripan Wajah")
 
